@@ -77,7 +77,7 @@ const encode = (
   if (componentX < 1 || componentX > 9 || componentY < 1 || componentY > 9) {
     throw new ValidationError("BlurHash must have between 1 and 9 components");
   }
-  if (width * height * 4 !== pixels.length) {
+  if (width * height * bytesPerPixel !== pixels.length) {
     throw new ValidationError("Width and height must match the pixels array");
   }
 
@@ -119,7 +119,7 @@ const encode = (
     hash += encode83(0, 1);
   }
 
-  hash += encode83(encodeDC(dc), 4);
+  hash += encode83(encodeDC(dc), bytesPerPixel);
 
   ac.forEach((factor) => {
     hash += encode83(encodeAC(factor, maximumValue), 2);
